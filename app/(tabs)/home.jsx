@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -171,29 +171,43 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        {/* Hero Banner */}
-        <ImageBackground
-          resizeMode="cover"
-          source={require("../../assets/images/homeBanner.png")}
-          style={styles.bannerContainer}
-          className="mb-6"
-        >
-          <View
-            className="absolute inset-0"
-            style={{ backgroundColor: "rgba(0,0,0,0.4)" }}
-          />
-          <BlurView
-            intensity={Platform.OS === "android" ? 100 : 30}
-            tint="dark"
-            style={styles.blurBox}
+        {/* Hero Banner - IMPROVED */}
+        {/* Hero Banner - SIMPLIFIED */}
+        <View className="px-4 my-6">
+          <ImageBackground
+            resizeMode="cover"
+            source={require("../../assets/images/homeBanner.png")}
+            style={styles.bannerContainer}
+            imageStyle={{ borderRadius: 24 }}
           >
-            <Text style={styles.title}>Dine with your</Text>
-            <Text style={styles.title}>loved ones ❤️</Text>
-            <Text className="mt-2 text-sm text-gray-300">
-              Book your table in seconds
-            </Text>
-          </BlurView>
-        </ImageBackground>
+            {/* Dark Gradient Overlay */}
+            <LinearGradient
+              colors={["rgba(0,0,0,0.7)", "rgba(0,0,0,0.4)", "rgba(0,0,0,0.7)"]}
+              style={styles.gradientOverlay}
+            />
+
+            {/* Content */}
+            <View className="items-center justify-center flex-1 px-6">
+              <View className="items-center">
+                {/* Main Heading */}
+                <Text className="mb-2 text-4xl font-bold text-center text-white">
+                  Dine with your
+                </Text>
+                <Text className="mb-4 text-4xl font-bold text-center text-white">
+                  loved ones
+                </Text>
+
+                {/* Heart Emoji */}
+                <Text className="mb-4 text-3xl">❤️</Text>
+
+                {/* Subtitle */}
+                <Text className="text-base text-center text-gray-300">
+                  Book your table in seconds
+                </Text>
+              </View>
+            </View>
+          </ImageBackground>
+        </View>
 
         {/* Special Discount Section */}
         <View className="mb-4">
@@ -311,29 +325,16 @@ export default Home;
 const styles = StyleSheet.create({
   bannerContainer: {
     width: "100%",
-    height: 240,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 16,
+    height: 280,
+    borderRadius: 24,
+    overflow: "hidden",
   },
-  blurBox: {
-    width: "90%",
-    paddingVertical: 24,
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    shadowColor: "#f49b33",
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 8,
-    borderWidth: 1,
-    borderColor: "rgba(244, 155, 51, 0.3)",
-  },
-  title: {
-    color: "#fff",
-    fontSize: 32,
-    fontWeight: "bold",
-    textAlign: "center",
+  gradientOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 24,
   },
 });
